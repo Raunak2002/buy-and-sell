@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
 import ShippingIcon from '@material-ui/icons/LocalShipping';
 import SupportIcon from '@material-ui/icons/ContactSupport';
 import ReturnIcon from '@material-ui/icons/MonetizationOn';
 import CancelIcon from '@material-ui/icons/Cancel';
+import { AuthContext } from '../Features/AuthContext';
 
 export default function Home() {
+    const {currentUser} = useContext(AuthContext);
+    console.log(currentUser);
     const styles = {
         largeIcon: {
             width: 30,

@@ -3,11 +3,10 @@ import { DataContext } from "./DataProvider";
 import { Link } from "react-router-dom";
 
 export default function Products(props) {
-
     const value = useContext(DataContext);
     const [products] = value.products;
     const addCart = value.addCart;
-
+    
     return (
         <section>
             <div className="products">

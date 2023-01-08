@@ -1,7 +1,9 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../Features/AuthContext';
 
 export const DataContext = createContext();
 export const DataProvider = (props) => {
+    const {currentUser} = useContext(AuthContext);
     const [products, setProducts] = useState([]);
     const getData = () => {
         fetch('data.json'
@@ -27,6 +29,10 @@ export const DataProvider = (props) => {
     const [cart, setCart] = useState([]);
 
     const addCart = (id) => {
+        if(!currentUser){
+            alert("Login First");
+            return;
+        }
         const check = cart.every(item => {
             return item.pid !== id;
         })

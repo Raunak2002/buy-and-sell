@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from "react-router-dom";
+import { AuthContext } from '../Features/AuthContext';
 import { DataContext } from "./DataProvider";
 
 export default function Cart() {
-    
+    const {currentUser} = useContext(AuthContext);
     const value = useContext(DataContext);
     const [cart, setCart] = value.cart;
     const [total, setTotal] = useState(0);
@@ -64,11 +65,13 @@ export default function Cart() {
             setCart([...cart]);
         }
     }
+    if(!currentUser)
+        return <div>{alert("Login First")}</div>
+
     if (cart.length === 0)
         return <section id="cart-section">Cart is Empty ...!!! </section>
 
-    return (
-        <section>
+    return (<section>
             <div className="cart">
                 <div className="cart-box">
                     {
@@ -111,9 +114,6 @@ export default function Cart() {
                     <Link to="/cart" className="checkout-btn">Payment</Link>
                     <small>*Free Delivery for orders above &#8377;1000 </small>
                 </div>
-
             </div>
-
-        </section>
-    )
+        </section>)
 }

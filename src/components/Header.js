@@ -2,11 +2,15 @@ import React, { useState, useContext } from 'react';
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { DataContext } from "./DataProvider";
+import { AuthContext } from '../Features/AuthContext';
+import { auth } from '../firebase';
+import { signOut } from "firebase/auth";
 
 export default function Header(props) {
     const [menu, setMenu] = useState(false);
     const value = useContext(DataContext);
     const [cart] = value.cart;
+    const {currentUser} = useContext(AuthContext);
 
     const toggleMenu = () => {
         setMenu(!menu);
@@ -40,9 +44,9 @@ export default function Header(props) {
             <ul style={styles.styleMenu}>
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/products">Products</Link></li>
-                <li><Link to="/register">Login/Register</Link></li>
+                {currentUser?<li onClick={()=>signOut(auth)}><a href='/'>Logout</a></li>: <li><Link to="/login">Login/Register</Link></li>}
                 <li onClick={toggleMenu}>
-                    <img src={require('../Media/cross.png')} alt="close-menu" width="30" className="menu" />
+                    <img src='cross.png' alt="close-menu" width="30" className="menu" />
                 </li>
             </ul>
 
